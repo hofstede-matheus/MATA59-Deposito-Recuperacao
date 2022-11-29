@@ -34,7 +34,6 @@ class Proxy:
     print("arquivos já existe?", decoded_message)
 
     if decoded_message == "ALREADY_EXISTS":
-      print("Arquivo já existe, saindo...")
       app_socket.close()
       return
     
