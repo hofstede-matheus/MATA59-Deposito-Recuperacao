@@ -29,7 +29,15 @@ class Proxy:
     app_socket.send(f"{action}{SEPARATOR}{nome_do_arquivo}{SEPARATOR}{filesize}{SEPARATOR}{nivel_de_tolerancia}".encode())
     message, _ = app_socket.recvfrom(BUFFER_SIZE)
 
-    print("arquivos já existe?", message.decode())
+    decoded_message = message.decode()
+
+    print("arquivos já existe?", decoded_message)
+
+    if decoded_message == "ALREADY_EXISTS":
+      print("Arquivo já existe, saindo...")
+      app_socket.close()
+      return
+    
     time.sleep(1)
 
     with open(nome_do_arquivo, "rb") as f:

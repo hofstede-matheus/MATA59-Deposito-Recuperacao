@@ -12,6 +12,7 @@ services:
       - SERVER_URL=mata59-server
     networks:
       - default
+
   server:
     container_name: mata59-server
     build:
@@ -23,6 +24,18 @@ services:
       - SERVER_URL=0.0.0.0
     expose:
       - 5959
+    networks:
+      - default
+
+  test:
+    container_name: mata59-test
+    build:
+      context: .
+      dockerfile: Dockerfile.test
+    volumes:
+      - ./:/app
+    environment:
+      - SERVER_URL=mata59-server
     networks:
       - default
 

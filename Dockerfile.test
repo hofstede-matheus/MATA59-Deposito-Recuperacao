@@ -7,7 +7,4 @@ RUN curl -fsSL https://deb.nodesource.com/setup_16.x | bash - &&\
 
 RUN npm i -g nodemon
 
-EXPOSE 5959
-
-ENTRYPOINT [ "nodemon", "-L",  "--exec" ]
-CMD ["python3", "server.py" ]
+CMD ["python3", "tests.py", "-v" ]
