@@ -2,7 +2,10 @@ import os
 import socket
 import time
 
-HOST = 'localhost'
+HOST = os.environ.get('SERVER_URL', 'localhost')
+
+
+print(HOST)
 PORT = 5959
 SEPARATOR = "|"
 BUFFER_SIZE = 1024
@@ -17,6 +20,7 @@ class Proxy:
   def deposit_file(nome_do_arquivo: str, nivel_de_tolerancia: int):
     print("Deposita...")
     app_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    print(HOST)
     app_socket.connect((HOST, PORT))
 
     action = "TYPE_DEPOSIT"

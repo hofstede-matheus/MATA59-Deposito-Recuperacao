@@ -1,0 +1,32 @@
+version: '3'
+
+services:
+  client:
+    container_name: mata59-client
+    build:
+      context: .
+      dockerfile: Dockerfile.client
+    volumes:
+      - ./:/app
+    environment:
+      - SERVER_URL=mata59-server
+    networks:
+      - default
+  server:
+    container_name: mata59-server
+    build:
+      context: .
+      dockerfile: Dockerfile.server
+    volumes:
+      - ./:/app
+    environment:
+      - SERVER_URL=0.0.0.0
+    expose:
+      - 5959
+    networks:
+      - default
+
+networks:
+  default:
+    name: default-mata59
+    driver: bridge

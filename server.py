@@ -5,7 +5,8 @@ import shutil
 import os.path
 import time
 
-HOST = 'localhost'
+HOST = '0.0.0.0'
+print(HOST)
 PORT = 5959
 BUFFER_SIZE = 1024
 SEPARATOR = "|"

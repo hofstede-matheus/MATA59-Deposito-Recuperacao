@@ -29,3 +29,8 @@ a
 ```
 pip install -r requirements.txt
 ```
+
+```
+docker-compose run --rm --name mata59-server server
+docker-compose run --rm --name mata59-client client
+``` 
