@@ -5,7 +5,7 @@ import shutil
 import os.path
 import time
 
-HOST = '0.0.0.0'
+HOST = os.environ.get('SERVER_URL', 'localhost')
 print(HOST)
 PORT = 5959
 BUFFER_SIZE = 1024

@@ -21,16 +21,20 @@ https://docs.python.org/3/library/argparse.html
 
 
 
-Persistência em disco
-Tem que usar sockets
-a
+✅ Persistência em disco
 
+✅ Uso de sockets para mensagens e transferências de arquivo
 
-```
-pip install -r requirements.txt
-```
+✅ Atualização de replicas para arquivos que já existem
+
 
 ```
 docker-compose run --rm --name mata59-server server
 docker-compose run --rm --name mata59-client client
+``` 
+OU
+
+```
+python3 server.py
+python3 main.py
 ``` 
