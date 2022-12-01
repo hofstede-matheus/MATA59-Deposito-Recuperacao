@@ -6,7 +6,6 @@ def clear_line():
   os.system('cls' if os.name == 'nt' else 'clear')
 
 def parse_mode():
-  # clear_line()
   mode = input("Selecione um modo: \n1 - Modo Depósito \n2 - Modo Recuperação \n")
   if mode == "1":
     init_deposit_mode()
