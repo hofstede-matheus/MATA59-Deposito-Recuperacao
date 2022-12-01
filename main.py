@@ -44,5 +44,4 @@ def init_recovery_mode():
 print("init")
 
 while (True):
-  # clear_line()
   parse_mode()
