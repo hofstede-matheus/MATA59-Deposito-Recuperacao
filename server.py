@@ -60,39 +60,37 @@ def restore(conn: socket, filename: str):
             if not bytes_read:
               break
             conn.sendall(bytes_read)
-        time.sleep(1)
-        
+    print("ok")
   else:
     data = str.encode('NOT_EXISTS')
     conn.sendall(data)
     print("NOT_EXISTS")
 
 def start():
-  app_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM) # IPv4, TCP
-  app_socket.bind((HOST, PORT))
-  app_socket.listen()
+  while True:
+    app_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM) # IPv4, TCP
+    app_socket.bind((HOST, PORT))
+    app_socket.listen()
 
-  print("Aguardando conexão do cliente...")
-  conn, address = app_socket.accept()
+    print("Aguardando conexão do cliente...")
+    conn, address = app_socket.accept()
 
-  print('Conectado com:', address)
+    print('Conectado com:', address)
 
-  data = conn.recv(BUFFER_SIZE)
-  decoded_data = data.decode()
+    data = conn.recv(BUFFER_SIZE)
+    decoded_data = data.decode()
 
-  action, filename, replicas = decoded_data.split(SEPARATOR)
-  print("Recebido:", action, filename, replicas)
+    action, filename, replicas = decoded_data.split(SEPARATOR)
+    print("Recebido:", action, filename, replicas)
 
-  if action == "TYPE_DEPOSIT":
-    deposit(conn, filename, int(replicas))
-  else:
-    restore(conn, filename)
+    if action == "TYPE_DEPOSIT":
+      deposit(conn, filename, int(replicas))
+    else:
+      restore(conn, filename)
 
-  time.sleep(1)
-  print("conn.close()")
-  conn.close()
-  app_socket.close()
-  time.sleep(1)
-  start()
+    print("conn.close()")
+    conn.close()
+    app_socket.close()
+    # start()
 
 start()

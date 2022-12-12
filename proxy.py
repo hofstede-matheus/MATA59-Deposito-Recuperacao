@@ -62,7 +62,7 @@ class Proxy:
     else:
       time.sleep(1)
 
-      with open(nome_do_arquivo, "wb") as f:
+      with open(f"restore/{nome_do_arquivo}", "wb") as f:
           while True:
               bytes_read = app_socket.recv(BUFFER_SIZE)
               print("\n","CHUNK:", bytes_read)
