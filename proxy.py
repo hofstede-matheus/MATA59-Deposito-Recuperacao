@@ -13,14 +13,21 @@ BUFFER_SIZE = 1024
 
 class Proxy:
   def get_file_list():
+    print("Lista...")
     print("Lista de arquivos:")
-    subfolders = [ f.path.split('/')[1] for f in os.scandir("dump") if f.is_dir() ]
-    print(subfolders)
+    app_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    app_socket.connect((HOST, PORT))
+
+    action = "TYPE_LIST"
+    app_socket.send(f"{action}{SEPARATOR}-{SEPARATOR}0".encode())
+    message, _ = app_socket.recvfrom(BUFFER_SIZE)
+
+    decoded_message = message.decode()
+    print(decoded_message)
 
   def deposit_file(nome_do_arquivo: str, nivel_de_tolerancia: int):
     print("Deposita...")
     app_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-    print(HOST)
     app_socket.connect((HOST, PORT))
 
     action = "TYPE_DEPOSIT"
@@ -34,7 +41,6 @@ class Proxy:
       app_socket.close()
       return
     else:
-      time.sleep(1)
 
       with open(nome_do_arquivo, "rb") as f:
           while True:
@@ -60,7 +66,6 @@ class Proxy:
       app_socket.close()
       return
     else:
-      time.sleep(1)
 
       with open(f"restore/{nome_do_arquivo}", "wb") as f:
           while True:

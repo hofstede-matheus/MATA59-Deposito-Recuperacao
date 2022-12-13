@@ -19,7 +19,7 @@ class ProxyTests(unittest.TestCase):
 
       # act
       Proxy.deposit_file("a", 2)
-      time.sleep(3)
+      time.sleep(1)
 
       # assert
       self.assertTrue(os.path.isfile("dump/a/a_1"))
@@ -28,16 +28,15 @@ class ProxyTests(unittest.TestCase):
 
     def test_deposit_file_when_file_exists(self):
       # arrange
-      time.sleep(5)
       Proxy.deposit_file("b", 2)
-      time.sleep(5)
+      time.sleep(1)
       self.assertTrue(os.path.isfile("dump/b/b_1"))
       self.assertTrue(os.path.isfile("dump/b/b_2"))
       self.assertFalse(os.path.isfile("dump/b/b_3"))
 
       # act
       Proxy.deposit_file("b", 3)
-      time.sleep(3)
+      time.sleep(1)
 
       # assert
       self.assertTrue(os.path.isfile("dump/b/b_1"))
@@ -48,7 +47,6 @@ class ProxyTests(unittest.TestCase):
     def test_recover_file_when_NOT_exists(self):
       # arrange
       clean_dump_folder()
-      time.sleep(1)
       self.assertFalse(os.path.isfile("dump/a/a_1"))
 
       # act
@@ -60,9 +58,8 @@ class ProxyTests(unittest.TestCase):
     def test_recover_file_when_exists(self):
       # arrange
       clean_dump_folder()
-      time.sleep(5)
       Proxy.deposit_file("b", 2)
-      time.sleep(5)
+      time.sleep(1)
       self.assertTrue(os.path.isfile("dump/b/b_1"))
       self.assertTrue(os.path.isfile("dump/b/b_2"))
       self.assertFalse(os.path.isfile("dump/b/b_3"))

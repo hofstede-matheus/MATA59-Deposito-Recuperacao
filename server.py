@@ -58,7 +58,7 @@ def restore(conn: socket, filename: str):
             bytes_read = f.read(BUFFER_SIZE)
             print("\n","CHUNK:", bytes_read)
             if not bytes_read:
-              break
+                break
             conn.sendall(bytes_read)
     print("ok")
   else:
@@ -66,12 +66,19 @@ def restore(conn: socket, filename: str):
     conn.sendall(data)
     print("NOT_EXISTS")
 
-def start():
-  while True:
-    app_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM) # IPv4, TCP
-    app_socket.bind((HOST, PORT))
-    app_socket.listen()
+def list(conn: socket):
+  subfolders = [ f.path.split('/')[1] for f in os.scandir("dump") if f.is_dir() ]
+  conn.send(','.join(subfolders).encode())
 
+def error(conn: socket):
+  conn.send(f"ERROR".encode())
+
+def start():
+  app_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM) # IPv4, TCP
+  app_socket.bind((HOST, PORT))
+
+  while True:
+    app_socket.listen()
     print("Aguardando conexão do cliente...")
     conn, address = app_socket.accept()
 
@@ -85,12 +92,14 @@ def start():
 
     if action == "TYPE_DEPOSIT":
       deposit(conn, filename, int(replicas))
-    else:
+    elif action == "TYPE_RECOVER":  
       restore(conn, filename)
+    elif action == "TYPE_LIST":  
+      list(conn)
+    else:
+      error(conn)
 
     print("conn.close()")
     conn.close()
-    app_socket.close()
-    # start()
 
 start()
