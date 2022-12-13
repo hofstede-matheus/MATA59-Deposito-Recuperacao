@@ -5,12 +5,18 @@ import filecmp
 
 from proxy import Proxy
 
-def clean_dump_folder():
+def clean_folders():
       folder = "dump/"
       for filename in os.listdir(folder):
           file_path = os.path.join(folder, filename)
           if os.path.isdir(file_path):
               shutil.rmtree(file_path)
+
+      folder = "restore/"
+      for filename in os.listdir(folder):
+          file_path = os.path.join(folder, filename)
+          if os.path.isfile(file_path) and filename != ".gitkeep":
+              os.remove(file_path)
 
 class ProxyTests(unittest.TestCase):
     def test_deposit_file_when_file_NOT_exists(self):
@@ -46,7 +52,7 @@ class ProxyTests(unittest.TestCase):
 
     def test_recover_file_when_NOT_exists(self):
       # arrange
-      clean_dump_folder()
+      clean_folders()
       self.assertFalse(os.path.isfile("dump/a/a_1"))
 
       # act
@@ -57,7 +63,7 @@ class ProxyTests(unittest.TestCase):
     
     def test_recover_file_when_exists(self):
       # arrange
-      clean_dump_folder()
+      clean_folders()
       Proxy.deposit_file("b", 2)
       time.sleep(1)
       self.assertTrue(os.path.isfile("dump/b/b_1"))
@@ -74,12 +80,12 @@ class ProxyTests(unittest.TestCase):
     @classmethod
     def setUpClass(self):
       print("setUpClass")
-      clean_dump_folder()
+      clean_folders()
 
     @classmethod
     def tearDownClass(self):
       print("tearDownClass")
-      clean_dump_folder()
+      clean_folders()
 
 if __name__ == "__main__":
     unittest.main()
