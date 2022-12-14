@@ -3,6 +3,8 @@ version: '3'
 services:
   client:
     container_name: mata59-client
+    tty: true
+    stdin_open: true
     build:
       context: .
       dockerfile: Dockerfile.client
